@@ -77,7 +77,7 @@ class CI_Loader {
 	 *
 	 * @var	array
 	 */
-	protected $_ci_model_paths =	array(APPPATH);
+	protected $_ci_model_paths =	array(APPPATH, BASEPATH);
 
 	/**
 	 * List of paths to load helpers from
