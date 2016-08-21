@@ -343,7 +343,7 @@ class CI_Router {
 
 			if ( ! file_exists(APPPATH.'controllers/'.$test.'.php')
 				&& $directory_override === FALSE
-				&& is_dir(APPPATH.'controllers/'.$this->directory.$segments[0])
+				&& is_dir(APPPATH.'controllers/'.$this->directory.ucfirst(strtolower($segments[0])))
 			)
 			{
 				$this->set_directory(array_shift($segments), TRUE);
@@ -371,6 +371,7 @@ class CI_Router {
 	{
 		// Turn the segment array into a URI string
 		$uri = implode('/', $this->uri->segments);
+                $uri = strtolower($uri);
 
 		// Get HTTP verb
 		$http_verb = isset($_SERVER['REQUEST_METHOD']) ? strtolower($_SERVER['REQUEST_METHOD']) : 'cli';
@@ -394,6 +395,7 @@ class CI_Router {
 
 			// Convert wildcards to RegEx
 			$key = str_replace(array(':any', ':num'), array('[^/]+', '[0-9]+'), $key);
+                        $key = strtolower($key);
 
 			// Does the RegEx match?
 			if (preg_match('#^'.$key.'$#', $uri, $matches))
@@ -434,6 +436,7 @@ class CI_Router {
 	public function set_class($class)
 	{
 		$this->class = str_replace(array('/', '.'), '', $class);
+                $this->class = strtolower($this->class);
 	}
 
 	// --------------------------------------------------------------------
@@ -494,6 +497,7 @@ class CI_Router {
 		{
 			$this->directory .= str_replace('.', '', trim($dir, '/')).'/';
 		}
+                $this->directory = strtolower($this->directory);
 	}
 
 	// --------------------------------------------------------------------
